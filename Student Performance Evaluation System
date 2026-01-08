@@ -1,0 +1,74 @@
+//Problem Statement: Create a Student class with attributes like studentID, name, and marks. Write methods to:
+//1. Set and get student information.
+//2. Calculate and display the average marks.
+//3. Determine if the student has passed or failed based on a passing threshold (e.g., 50%). Use Class, objects and Encapsulation
+import java.util.Scanner;
+public class Student {
+    private int id;
+    private String name;
+    private double marks[], avg;
+
+    public void setinfo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter student name: ");
+        this.name = sc.nextLine();
+        System.out.print("Enter roll number: ");
+        this.id = sc.nextInt();
+        System.out.print("Enter no. of subjects: ");
+        int n = sc.nextInt();
+        this.marks = new double[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter marks for subject " + (i + 1) + ": ");
+            this.marks[i] = sc.nextDouble();
+        }
+    }
+    public void getinfo() {
+        System.out.println(" ");
+        System.out.println("Roll Number: " + id);
+        System.out.println("Name: " + name);
+        this.avg = average();
+        System.out.println("Average: " + String.format("%.2f", avg));
+        System.out.println("Grade: " + grade(avg));
+        result(avg);
+    }
+    private double average() {
+        if (marks == null || marks.length == 0) {
+            return 0;
+        }
+        double sum = 0;
+        for (double mark : marks) {
+            sum += mark;
+        }
+        return sum / marks.length;
+    }
+    private char grade(double average) {
+        if (average >= 90) return 'A';
+        else if (average >= 75) return 'B';
+        else if (average >= 60) return 'C';
+        else if (average >= 50) return 'D';
+        else if (average >= 40) return 'E';
+        else return 'F';
+    }
+    private void result(double average) {
+        if (average >= 40) {
+            System.out.println("Result: PASSED");
+        } else {
+            System.out.println("Result: FAILED");
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Class Strength: ");
+        int size = sc.nextInt();
+        Student[] strength = new Student[size];
+        for (int i = 0; i < strength.length; i++) {
+            System.out.println("\n--- Enter details for Student " + (i + 1) + " ---");
+            strength[i] = new Student(); 
+            strength[i].setinfo();
+        }
+        System.out.println("\n===== CLASS REPORT =====");
+        for (Student s : strength) {
+            s.getinfo();
+        }   
+    }
+}
